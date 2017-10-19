@@ -110,6 +110,13 @@ class Codec(object):
     def decode_octet(self):
         return self.unpack("!B")
 
+    # bool
+    def encode_bool(self, o):
+        self.pack("!?", o)
+
+    def decode_bool(self):
+        return self.unpack("!?")
+
     # short
     def encode_short(self, o):
         self.pack("!H", o)
@@ -213,6 +220,8 @@ class Codec(object):
                 value = self.decode_table()
             elif item_type == b"t":
                 value = (self.decode_octet() != 0)
+            elif item_type == b"b":
+                value = self.decode_bool()
             else:
                 raise ValueError(repr(item_type))
             result[key] = value
